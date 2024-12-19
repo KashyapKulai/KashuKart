@@ -4,7 +4,7 @@ import 'package:practice_project/screens/main_screen.dart';
 import 'package:practice_project/screens/profile.dart';
 
 class Tabscreen extends StatefulWidget{
-  Tabscreen({super.key});
+  const Tabscreen({super.key});
   @override
   State<StatefulWidget> createState() {
     return _TabscreenState();
