@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:practice_project/screens/tabScreen.dart';
+import 'package:practice_project/screens/tab_screen.dart';
 
 void main(){
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: Tabscreen(),
   ));
 }
