@@ -12,12 +12,14 @@ class ItemScreen extends StatefulWidget{
 }
 
 class _ItemSCreenState extends State<ItemScreen>{
+  int cartCount = 0;
 
   void quantityR(){
     setState(() {
       widget.item.quantity-=1;
     });
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,18 @@ class _ItemSCreenState extends State<ItemScreen>{
           Text(widget.item.amount.toString()),
           Text(widget.item.quantity.toString()),
           ElevatedButton(onPressed: (){
-            cart.add(widget.item);
+            cartCount+=1;
+            if(cartCount==1){
+              cart.add(widget.item);
+            }
+            else if(cartCount==widget.item.quantity+1){
+              const SnackBar(
+                content: Text('That was the last piece'),
+              );
+            }
+            else{
+              cart[cart.length-1]=Items(title: widget.item.title, amount: widget.item.amount, quantity: cartCount);
+            }
           }, child:const Text('add to cart')),
           ElevatedButton(
             onPressed: (){
