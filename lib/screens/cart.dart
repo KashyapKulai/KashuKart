@@ -20,36 +20,43 @@ class _CartScreenState extends State<CartScreen> {
     Widget cartCondition = const Center(child: Text('Cart is empty'));
 
     if(cart.isNotEmpty){
-      cartCondition=ListView.builder(
-        itemCount: cart.length,
-        itemBuilder:(context,index){
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ItemScreen(item: cart[index]),
-                ),
-              ).then((_) {
-                // Refresh the screen after returning from ItemScreen
-                refreshScreen();
-              });
-            },
-            child: Container(
-              padding: const EdgeInsets.all(0.8),
-              child: Column(
-                children: [
-                  Text(cart[index].title),
-                  Text(cart[index].amount.toString()),
-                  Text(cart[index].quantity.toString()),
-                ],
-              ),
+      cartCondition=Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: cart.length,
+              itemBuilder:(context,index){
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ItemScreen(item: cart[index]),
+                      ),
+                    ).then((_) {
+                      // Refresh the screen after returning from ItemScreen
+                      refreshScreen();
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(0.8),
+                    child: Column(
+                      children: [
+                        Text(cart[index].title),
+                        Text(cart[index].amount.toString()),
+                        Text(cart[index].quantity.toString()),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
+          ),
+          ElevatedButton(onPressed: (){}, child: const Text('Check Out'))
+        ],
       );
     }
-    
+
     return Scaffold(
       body: cartCondition
     );
