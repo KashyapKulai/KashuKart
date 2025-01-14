@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practice_project/screens/cart.dart';
+import 'package:practice_project/screens/item_add_screen.dart';
 import 'package:practice_project/screens/main_screen.dart';
 import 'package:practice_project/screens/profile.dart';
 
@@ -31,6 +32,16 @@ class _TabscreenState extends State<Tabscreen>{
     return Scaffold(
       appBar: AppBar(
         title: const Text('KashuKart'),
+        leading: IconButton(
+          onPressed:(){
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddItemScreen(),
+              ),
+            );
+          }
+         , icon:const Icon(Icons.add)),
       ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(

@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:practice_project/models/item.dart';
 import 'package:practice_project/models/testing_list.dart';
 import 'package:practice_project/screens/item_screen.dart';
 
@@ -24,33 +25,44 @@ class _MainScreenState extends State<MainScreen> {
     }
 
     return Scaffold(
-      body:  ListView.builder(
-        itemCount: items.length,
-        itemBuilder:(context,index){
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ItemScreen(item: items[index]),
+      body:  StreamBuilder<Object>(
+        stream: FirebaseFirestore.instance.collection('item').snapshots(),
+        builder: (context,AsyncSnapshot snapshot) {
+          if(snapshot.connectionState==ConnectionState.waiting){
+            return const Center(child: CircularProgressIndicator(),);
+          }
+          if(!snapshot.hasData){
+            return const Text('No data here ');
+          }
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder:(context,index){
+              return GestureDetector(
+                onTap: () {
+                  /*Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ItemScreen(item: items[index]),
+                    ),
+                  ).then((_) {
+                    // Refresh the screen after returning from ItemScreen
+                    refreshScreen();
+                  });*/
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(0.8),
+                  child: Column(
+                    children: [
+                      Text(snapshot.data!.docs[index].data()['itemName'].toString()),
+                      Text(snapshot.data!.docs[index].data()['price'].toString()),
+                      Text(snapshot.data!.docs[index].data()['quantity'].toString()),
+                    ],
+                  ),
                 ),
-              ).then((_) {
-                // Refresh the screen after returning from ItemScreen
-                refreshScreen();
-              });
+              );
             },
-            child: Container(
-              padding: const EdgeInsets.all(0.8),
-              child: Column(
-                children: [
-                  Text(items[index].title),
-                  Text(items[index].amount.toString()),
-                  Text(items[index].quantity.toString()),
-                ],
-              ),
-            ),
           );
-        },
+        }
       ),
     );
   }

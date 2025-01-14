@@ -24,6 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> createAcount() async{
     try{
       final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailIdController.text.trim(), password: _passwordController.text.trim());
+      print(userCredential);
     }on FirebaseAuthException catch (e){
       print(e);
     }
