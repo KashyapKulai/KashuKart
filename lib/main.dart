@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:practice_project/firebase_options.dart';
-import 'package:practice_project/screens/sign_up.dart';
+import 'package:practice_project/screens/login.dart';
+//import 'package:practice_project/screens/sign_up.dart';
 import 'package:practice_project/screens/tab_screen.dart';
 import 'package:firebase_core/firebase_core.dart'; 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +29,7 @@ class TempController extends StatelessWidget{
               if(snapshot.data!=null){
                 return const Tabscreen();
               }
-              return const SignUpScreen();
+              return const LoginScreen();
              }
             ),
     );

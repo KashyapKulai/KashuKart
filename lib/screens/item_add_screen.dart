@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:practice_project/screens/sign_up.dart';
+import 'package:uuid/uuid.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:practice_project/screens/sign_up.dart';
 
 class AddItemScreen extends StatefulWidget{
   const AddItemScreen({super.key});
@@ -11,17 +12,24 @@ class AddItemScreen extends StatefulWidget{
 }
 
 class _AddItemScreenState extends State<AddItemScreen> {
+  String uuid = Uuid().v4();
   final TextEditingController _itemName = TextEditingController();
-
   final TextEditingController _price= TextEditingController();
   final TextEditingController _quantity= TextEditingController();
+
+  void idGenerator(){
+    setState(() {
+      uuid=Uuid().v4();
+    });
+  }
 
   Future<void> addToList()async{
     try{
       final data = await FirebaseFirestore.instance.collection('items').add({
-        'itemName':_itemName.text.trim(),
+        'item':_itemName.text.trim(),
         'price':_price.text.trim(),
         'quantity':_quantity.text.trim(),
+        'id':uuid,
       });
     }on FirebaseException catch(e){
       print(e);
@@ -65,6 +73,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
           ),
           ElevatedButton(
             onPressed: () async{
+              idGenerator();
               await addToList();
             }, 
             child: const Text('add'),
