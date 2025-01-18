@@ -24,18 +24,26 @@ class _ItemSCreenState extends State<ItemScreen>{
       
     });
   }*/
-  Future<void> addToCart()async{
+  Future<void> addToCart(int quantity)async{
     try{
       final data = await FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser!.uid).add({
         'id':widget.id,
         'price':widget.price,
-        'quantity':widget.quantity,
+        'quantity':quantity.toString(),
         'title':widget.title,
         'typee':'cart',
       });
     }on FirebaseException catch(e){
       print(e);
     }
+  }
+
+  Future<void> updateQuantity(int quantity)async{
+    var coll=FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser!.uid);
+    var allId = await coll.get();
+    var firstId= allId.docs.first.id;
+    var update = FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser!.uid);
+    update.doc(firstId).update({'quantity':quantity.toString()}).then((_) => print('Success')).catchError((error) => print('Failed: $error'));
   }
 
   @override
@@ -49,8 +57,21 @@ class _ItemSCreenState extends State<ItemScreen>{
           Text(widget.title),
           Text(widget.price),
           ElevatedButton(onPressed: ()async{
-            await addToCart();
-          }, child:const Text('add to cart')),
+            cartCount+=1;
+            if(cartCount==1){
+              await addToCart(cartCount);
+            }
+            else if(cartCount<=int.parse(widget.quantity)){
+              await updateQuantity(cartCount);
+            }
+            else{
+              AlertDialog(
+                title: Text('Maximum Amount reached'),
+              );
+            }
+            }, 
+            child:const Text('add to cart'),
+          ),
           ElevatedButton(
             onPressed: (){
               
