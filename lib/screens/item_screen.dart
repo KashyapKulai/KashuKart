@@ -39,11 +39,11 @@ class _ItemSCreenState extends State<ItemScreen>{
   }
 
   Future<void> updateQuantity(int quantity)async{
-    var coll=FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser!.uid);
-    var allId = await coll.get();
-    var firstId= allId.docs.first.id;
-    var update = FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser!.uid);
-    update.doc(firstId).update({'quantity':quantity.toString()}).then((_) => print('Success')).catchError((error) => print('Failed: $error'));
+    CollectionReference collection = FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser!.uid);
+    QuerySnapshot querySnapshot = await collection.where('id', isEqualTo: widget.id).get();
+    String documentId = querySnapshot.docs.first.id;
+    DocumentReference documentRef = FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser!.uid).doc(documentId);
+    await documentRef.update({'quantity': quantity.toString()});
   }
 
   @override

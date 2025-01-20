@@ -24,7 +24,7 @@ class _CartScreenState extends State<CartScreen> {
                   child: CircularProgressIndicator(),
                 );
               }
-              if (snapshot.data!.docs.isEmpty) {
+          if (snapshot.data!.docs.isEmpty) {
                 print('empty');
                 return Center(child: const Text('Cart is empty'));
           }
