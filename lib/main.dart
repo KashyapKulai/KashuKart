@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practice_project/firebase_options.dart';
 import 'package:practice_project/screens/login.dart';
-//import 'package:practice_project/screens/sign_up.dart';
 import 'package:practice_project/screens/tab_screen.dart';
 import 'package:firebase_core/firebase_core.dart'; 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,11 +17,10 @@ class TempController extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: StreamBuilder(
+      home: StreamBuilder<User?>(
              stream: FirebaseAuth.instance.authStateChanges(),
              builder: (context,snapshot){
               if(snapshot.connectionState==ConnectionState.waiting){
-                print('loading');
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -31,7 +29,6 @@ class TempController extends StatelessWidget{
                 print('Hello');
                 return const Tabscreen();
               }
-              print('hi');
               return const LoginScreen();
              }
             ),

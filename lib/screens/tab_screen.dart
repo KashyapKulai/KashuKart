@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:practice_project/screens/cart.dart';
 import 'package:practice_project/screens/item_add_screen.dart';
 import 'package:practice_project/screens/main_screen.dart';
-import 'package:practice_project/screens/profile.dart';
+import 'package:practice_project/screens/profile_detail.dart';
 
 class Tabscreen extends StatefulWidget{
   const Tabscreen({super.key});
@@ -27,7 +27,7 @@ class _TabscreenState extends State<Tabscreen>{
       activePage = const CartScreen();
     }
     if(_selectedPageIndex==2){
-      activePage = const ProfileScreen();
+      activePage = const ProfileDetail();
     }
     return Scaffold(
       appBar: AppBar(

@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:practice_project/screens/sign_up.dart';
 
 class AddItemScreen extends StatefulWidget{
   const AddItemScreen({super.key});
@@ -27,8 +25,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
     try{
       final data = await FirebaseFirestore.instance.collection('items').add({
         'item':_itemName.text.trim(),
-        'price':_price.text.trim(),
-        'quantity':_quantity.text.trim(),
+        'price':int.parse(_price.text.trim()),
+        'quantity':int.parse(_quantity.text.trim()),
         'id':uuid,
       });
     }on FirebaseException catch(e){
@@ -61,12 +59,14 @@ class _AddItemScreenState extends State<AddItemScreen> {
           ),
           TextField(
             controller: _price,
+            keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               hintText: 'price',
             ),
           ),
           TextField(
             controller: _quantity,
+            keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               hintText: 'quantity',
             ),

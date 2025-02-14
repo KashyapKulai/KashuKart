@@ -1,6 +1,8 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:practice_project/screens/login.dart';
+import 'package:practice_project/screens/profile.dart';
 
 class SignUpScreen extends StatefulWidget{
   const SignUpScreen({super.key});
@@ -25,6 +27,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     try{
       final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailIdController.text.trim(), password: _passwordController.text.trim());
       print(userCredential);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: _emailIdController.text.trim(), password: _passwordController.text.trim());
+      Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ProfileScreen(),
+      ),
+    );
     }on FirebaseAuthException catch (e){
       print(e);
     }
@@ -49,12 +58,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           ElevatedButton(onPressed: ()async{
             await createAcount();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const LoginScreen(),
-              ),
-            );
           }, child: const Text('Sign up')),
           ElevatedButton(onPressed: (){
             Navigator.push(
