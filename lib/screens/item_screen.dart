@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
 // ignore: must_be_immutable
 class ItemScreen extends StatefulWidget{
   const ItemScreen({super.key,required this.id,required this.title,required this.price,required this.quantity});
@@ -17,6 +20,15 @@ class ItemScreen extends StatefulWidget{
 class _ItemSCreenState extends State<ItemScreen>{
   int quantityCounter = 0;
   bool isLoading=true;
+  int pageIndex=0;
+
+  final urlImages=[
+    'https://picsum.photos/id/1/200/300',
+    'https://picsum.photos/id/2/200/300',
+    'https://picsum.photos/id/3/200/300',
+    'https://picsum.photos/id/4/200/300',
+    'https://picsum.photos/id/5/200/300',
+];
 
   Future<int> quantityCal() async{
     int quantityCart=0;
@@ -105,15 +117,36 @@ class _ItemSCreenState extends State<ItemScreen>{
 
   @override
   Widget build(BuildContext context) {
+
+    Widget buildIndicator()=>AnimatedSmoothIndicator(
+      activeIndex: pageIndex, 
+      count: urlImages.length,
+      effect: JumpingDotEffect(
+        dotHeight: 10,
+        dotWidth: 10,
+      ),
+    );
+
+    Widget buildImage(String imageUrl,int index)=>Container(
+      width: 300,
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      color: Colors.grey,
+      child: Image.network(
+        imageUrl,
+        fit: BoxFit.cover,
+      ),
+    );
+
     Widget cartBar = Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(color: Colors.blue,),
         );
     if(isLoading==false){
       if(quantityCounter>=1){
         cartBar=Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
           IconButton(onPressed: ()async{await updateQuantity();}, icon:Icon(Icons.add)),
-          Text(quantityCounter.toString(),style: TextStyle(fontSize: 8,),),
+          Text(quantityCounter.toString(),style: TextStyle(fontSize: 20,),),
           IconButton(onPressed: ()async{await decreaseQuantity();}, icon:Icon(Icons.remove)),
           ],
         );
@@ -134,11 +167,29 @@ class _ItemSCreenState extends State<ItemScreen>{
       body: Column(
         children: [
           Text(widget.title),
-          Text(widget.price.toString()),
+          Text('₹${widget.price.toString()}'),
+          CarouselSlider.builder(
+            itemCount: urlImages.length, 
+            itemBuilder: (context,index,realIndex){
+              return buildImage(urlImages[index], index);
+            }, 
+            options: CarouselOptions(
+              height: 250,
+              autoPlay: true,
+              autoPlayAnimationDuration: Duration(seconds: 2),
+              enlargeCenterPage: true,
+              enableInfiniteScroll: false,
+              onPageChanged: (index, reason) => 
+              setState(() {
+                pageIndex=index;
+              }),
+            )
+          ),
+          SizedBox(height: 10,),
+          buildIndicator(),
           cartBar,
         ],
       ),
-
     );
   }
 }

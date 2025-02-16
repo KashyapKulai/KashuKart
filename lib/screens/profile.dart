@@ -14,6 +14,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _numberController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
 
+  void dispose() {
+    _nameController.dispose();
+    _numberController.dispose();
+    _addressController.dispose();
+    super.dispose();
+  }
+
   Future<void> addDetails() async {
     try {
       await FirebaseFirestore.instance

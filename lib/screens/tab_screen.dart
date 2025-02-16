@@ -45,10 +45,14 @@ class _TabscreenState extends State<Tabscreen>{
       ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 50,
+        unselectedItemColor: Colors.grey[400],
+        selectedItemColor:Colors.white,
+        backgroundColor: Colors.blue,
         currentIndex: _selectedPageIndex,
         onTap: _selectPage,
         items: const [
-           BottomNavigationBarItem(icon:  Icon(Icons.home) ,label:'Home' ),
+           BottomNavigationBarItem(icon:  Icon(Icons.home,) ,label:'Home' ),
            BottomNavigationBarItem(icon: Icon(Icons.shopping_cart),label:'Cart' ),
            BottomNavigationBarItem(icon: Icon(Icons.person),label:'Profile' ),
         ],

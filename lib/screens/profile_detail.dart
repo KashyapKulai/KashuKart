@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:practice_project/screens/login.dart';
 
 class ProfileDetail extends StatefulWidget {
   const ProfileDetail({super.key});
@@ -56,12 +57,10 @@ class _ProfileDetailState extends State<ProfileDetail> {
   Widget build(BuildContext context) {
     if (isLoading) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Profile Details')),
-        body: const Center(child: CircularProgressIndicator()),
+        body: const Center(child: CircularProgressIndicator(color: Colors.blue,)),
       );
     } else {
         return Scaffold(
-          appBar: AppBar(title: const Text('Profile Details')),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -73,7 +72,34 @@ class _ProfileDetailState extends State<ProfileDetail> {
                 const SizedBox(height: 10),
                 Text("Address: ${profileData?['address']}", style: TextStyle(fontSize: 18)),
                 const SizedBox(height: 10),
-                ElevatedButton(onPressed: (){FirebaseAuth.instance.signOut();}, child: Text('Sign Out'))
+                ElevatedButton(
+                  onPressed: (){
+                    showDialog(
+                      context: context, 
+                      builder: (context)=> AlertDialog(
+                        actions: [
+                          TextButton(
+                            onPressed: (){
+                              FirebaseAuth.instance.signOut();
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ),);
+                            }, 
+                            child: Text('Yes'),
+                          ),
+                          TextButton(onPressed: (){Navigator.of(context).pop();}, child: Text('No'))
+                        ],
+                        title: Text('Sign Out'),
+                        contentPadding: EdgeInsets.all(16.0),
+                        content: Text('Are you Sure'),
+                      )
+                    );
+                    
+                  }, 
+                  child: Text('Sign Out'),
+                ),
               ],
             ),
           ),

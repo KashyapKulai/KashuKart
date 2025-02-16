@@ -19,7 +19,7 @@ class _CartScreenState extends State<CartScreen> {
         builder: (context,snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(color: Colors.blue,),
                 );
               }
           if (snapshot.data!.docs.isEmpty) {
@@ -43,11 +43,11 @@ class _CartScreenState extends State<CartScreen> {
                     );
                 },
                 child: Container(
-                  padding: const EdgeInsets.all(0.8),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(snapshot.data!.docs[index].data()['title']),
-                      Text(snapshot.data!.docs[index].data()['price'].toString()),
+                      Text('₹${snapshot.data!.docs[index].data()['price'].toString()}'),
                       Text(snapshot.data!.docs[index].data()['quantity'].toString()),
                     ],
                   ),
