@@ -61,6 +61,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
       );
     } else {
         return Scaffold(
+          backgroundColor: Colors.white,
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(

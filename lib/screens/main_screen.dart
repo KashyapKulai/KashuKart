@@ -34,6 +34,7 @@ class _MainScreenState extends State<MainScreen> {
     );
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           CarouselSlider.builder(

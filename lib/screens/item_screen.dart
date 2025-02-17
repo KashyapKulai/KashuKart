@@ -161,6 +161,7 @@ class _ItemSCreenState extends State<ItemScreen>{
       }
     }
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('KashuKart'),
       ),

@@ -14,6 +14,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     print(FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser!.uid).snapshots().toString());
     return Scaffold(
+      backgroundColor: Colors.white,
       body:StreamBuilder(
         stream:FirebaseFirestore.instance.collection(FirebaseAuth.instance.currentUser!.uid).where('type',isEqualTo:'cart' ).snapshots() ,
         builder: (context,snapshot) {

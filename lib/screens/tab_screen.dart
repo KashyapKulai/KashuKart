@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:practice_project/screens/cart.dart';
 import 'package:practice_project/screens/item_add_screen.dart';
@@ -22,14 +23,19 @@ class _TabscreenState extends State<Tabscreen>{
   }
   @override
   Widget build(BuildContext context) {
-    Widget activePage =  MainScreen();
-    if(_selectedPageIndex==1){
-      activePage = const CartScreen();
-    }
-    if(_selectedPageIndex==2){
-      activePage = const ProfileDetail();
-    }
+    final items = <Widget>[
+      Icon(Icons.home,),
+      Icon(Icons.shopping_cart,),
+      Icon(Icons.person,),
+    ];
+
+    final screens = [
+      MainScreen(),
+      CartScreen(),
+      ProfileDetail(),
+    ];
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('KashuKart'),
         leading: IconButton(
@@ -43,19 +49,16 @@ class _TabscreenState extends State<Tabscreen>{
           }
          , icon:const Icon(Icons.add)),
       ),
-      body: activePage,
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 50,
-        unselectedItemColor: Colors.grey[400],
-        selectedItemColor:Colors.white,
-        backgroundColor: Colors.blue,
-        currentIndex: _selectedPageIndex,
+      body: screens[_selectedPageIndex],
+      bottomNavigationBar: CurvedNavigationBar(
+        animationDuration: const Duration(milliseconds: 300),
+        height: 60,
+        color: Colors.blue,
+        backgroundColor: Colors.white,
+        buttonBackgroundColor: Colors.white,
         onTap: _selectPage,
-        items: const [
-           BottomNavigationBarItem(icon:  Icon(Icons.home,) ,label:'Home' ),
-           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart),label:'Cart' ),
-           BottomNavigationBarItem(icon: Icon(Icons.person),label:'Profile' ),
-        ],
+        index: _selectedPageIndex,
+        items: items
       ),
     );
   }

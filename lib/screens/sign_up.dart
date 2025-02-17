@@ -61,71 +61,73 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(height: 30,),
-            Image.asset('assets/images/loading.png'),
-            TextField(
-              cursorColor: Colors.blue,
-              controller: _emailIdController,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  borderSide: BorderSide(width: 2,color: Colors.blue),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(height: 30,),
+              Image.asset('assets/images/loading.png'),
+              TextField(
+                cursorColor: Colors.blue,
+                controller: _emailIdController,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    borderSide: BorderSide(width: 2,color: Colors.blue),
+                  ),
+                  focusedBorder:OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  hintText: 'email id',
+                  labelText: 'email id',
+                  labelStyle: TextStyle(color: Colors.blue),
                 ),
-                focusedBorder:OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue, width: 2.0),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                hintText: 'email id',
-                labelText: 'email id',
-                labelStyle: TextStyle(color: Colors.blue),
               ),
-            ),
-            SizedBox(height: 15,),
-            TextField(
-              cursorColor: Colors.blue,
-              obscureText: showPassword,
-              controller: _passwordController,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  borderSide: BorderSide(width: 2,color: Colors.blue,),
+              SizedBox(height: 15,),
+              TextField(
+                cursorColor: Colors.blue,
+                obscureText: showPassword,
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    borderSide: BorderSide(width: 2,color: Colors.blue,),
+                  ),
+                  focusedBorder:OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  suffixIconColor: Colors.blue,
+                  hintText: 'password',
+                  labelText: 'password',
+                  labelStyle: TextStyle(color: Colors.blue),
+                  suffixIcon: IconButton(onPressed: (){
+                      showFunction();
+                    },icon: Icon(showPassword == false ? Icons.visibility : Icons.visibility_off))
                 ),
-                focusedBorder:OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                suffixIconColor: Colors.blue,
-                hintText: 'password',
-                labelText: 'password',
-                labelStyle: TextStyle(color: Colors.blue),
-                suffixIcon: IconButton(onPressed: (){
-                    showFunction();
-                  },icon: Icon(showPassword == false ? Icons.visibility : Icons.visibility_off))
               ),
-            ),
-            SizedBox(height: 20,),
-            ElevatedButton(onPressed: ()async{
-              await createAcount();
-            },
-            style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.blue)),
-            child: const Text('Sign up',style: TextStyle(color: Colors.white),)),
-            SizedBox(height: 10,),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginScreen(),
-                ),
-              );
+              SizedBox(height: 20,),
+              ElevatedButton(onPressed: ()async{
+                await createAcount();
               },
-              child: Text('Already have an account?',style: TextStyle(decoration: TextDecoration.underline,color: Colors.blue,decorationColor: Colors.blue)
-            ),
-            )
-          ],
+              style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              child: const Text('Sign up',style: TextStyle(color: Colors.white),)),
+              SizedBox(height: 10,),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ),
+                );
+                },
+                child: Text('Already have an account?',style: TextStyle(decoration: TextDecoration.underline,color: Colors.blue,decorationColor: Colors.blue)
+              ),
+              )
+            ],
+          ),
         ),
       ),
     );
