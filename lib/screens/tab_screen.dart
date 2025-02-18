@@ -36,19 +36,6 @@ class _TabscreenState extends State<Tabscreen>{
     ];
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text('KashuKart'),
-        leading: IconButton(
-          onPressed:(){
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AddItemScreen(),
-              ),
-            );
-          }
-         , icon:const Icon(Icons.add)),
-      ),
       body: screens[_selectedPageIndex],
       bottomNavigationBar: CurvedNavigationBar(
         animationDuration: const Duration(milliseconds: 300),
